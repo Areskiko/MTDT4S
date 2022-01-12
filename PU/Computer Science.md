@@ -1,3 +1,3 @@
-Concerned with the theoretical mathematics behind computers
+Concerned with the theoretical mathematics behind computers.
 
 #PU
