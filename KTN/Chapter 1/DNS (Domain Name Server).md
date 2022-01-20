@@ -1,1 +1,1 @@
-Translate names to ip addresses. Basicly big as look up table
+Translate names to ip addresses. basically big asa look up table
