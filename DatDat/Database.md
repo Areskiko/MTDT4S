@@ -1,4 +1,3 @@
-A system for saving data
-
+A collection of stored data
 
 #DatDat
