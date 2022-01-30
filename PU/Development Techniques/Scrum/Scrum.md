@@ -1,4 +1,5 @@
-An [[Incremental]] strategy that focuses more on how to manage the project, compared to the technical detail of [[Extreme Programming]]
+An [[Incremental]] strategy that focuses more on how to manage the project, compared to the technical detail of [[Extreme Programming]].
+Scrum attempts to be inline with the [[Agile Manifesto]]
 
 
 

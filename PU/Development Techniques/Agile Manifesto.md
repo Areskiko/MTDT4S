@@ -46,3 +46,5 @@ emerge from self-organizing teams.
 At regular intervals, the team reflects on how  
 to become more effective, then tunes and adjusts  
 its behavior accordingly.
+
+#PU/DesignTechniques 
