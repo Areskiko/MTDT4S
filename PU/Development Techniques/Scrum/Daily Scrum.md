@@ -4,3 +4,5 @@ Each member lists:
 - What they did yesterday
 - What they will do today
 - What is in their way
+
+#PU/Scrum

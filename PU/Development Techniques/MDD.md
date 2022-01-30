@@ -1,4 +1,3 @@
 Model-Driven design
 
-#PU 
-#DesignTechniques
+#PU/DesignTechniques

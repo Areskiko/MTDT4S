@@ -6,5 +6,4 @@ A team should in advance make clear what [[Software Engineering Technique]]s the
 
 As an engineer a software engineer has to take constraints, such as cost and time, into account and limit the scope of the product. Reuse of software may expedite the process, allowing the scope of the product to expand.
 
-#PU
-#SoftwareEngineering
+#PU/SoftwareEngineering
