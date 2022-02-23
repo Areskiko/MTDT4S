@@ -6,6 +6,8 @@
 
 [[Mengde Operatorer]]
 
+[[Aggregering]]
+
 [[Join]]
 
 #DatDat/RelAlg
