@@ -1,12 +1,12 @@
 ![Aggr](aggr.png)
 
-[[Count]]
+[[DatDat/RelAlg/Count]]
 
-[[Sum]]
+[[DatDat/RelAlg/Sum]]
 
-[[Avg]]
+[[DatDat/RelAlg/Avg]]
 
-[[Min]]
+[[DatDat/RelAlg/Min]]
 
-[[Max]]
+[[DatDat/RelAlg/Max]]
 

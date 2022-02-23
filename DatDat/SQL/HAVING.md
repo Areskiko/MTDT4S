@@ -1,0 +1,1 @@
+Tillsvarer [[WHERE]], men brukes etter [[GROUP BY]]
