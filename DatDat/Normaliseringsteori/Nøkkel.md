@@ -6,3 +6,5 @@ Eksempel:
 	*	(a+ $\vee$ c+) $\neq$ R
 
 Alle nøkler er også kandidatnøkler og en av de velges til å bli primærnøklen
+
+#DatDat/Norm

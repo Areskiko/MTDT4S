@@ -10,3 +10,5 @@ R = {A,B,C,D}   F = {D -> A, B -> D. ABD -> C}
 *	D+ = AD
 
 Man kan også bli spurt om tillukningen til AB f.eks. Trenger ikke å være kun en på venstresiden i starten
+
+#DatDat/Norm

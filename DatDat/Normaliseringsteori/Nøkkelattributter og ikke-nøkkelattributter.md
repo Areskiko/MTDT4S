@@ -5,3 +5,5 @@ Eksempel:
 	*	Nøkkelattributtene er abc
 		*	ab+ = R og ac+ = R
 	*	Ikke-nøkkelattributtene er d
+
+#DatDat/Norm

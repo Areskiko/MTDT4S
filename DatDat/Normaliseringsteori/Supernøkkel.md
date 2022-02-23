@@ -5,3 +5,5 @@ Hvis settet A er en supernøkkel vil A+ = R
 Eksempel:
 *	R(a,b,c) F= {a -> b}
 	*	Supernøklene er { ac, abc }
+
+#DatDat/Norm
