@@ -1,0 +1,1 @@
+Hvis man leser en tabell mens den blir oppdatert. Godt eksempel er nested-loop join hvor man leser samme tabell flere ganger og ønsker ikke at den blir oppdatert mens man holder på
