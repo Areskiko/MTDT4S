@@ -1,0 +1,1 @@
+Hver SQL-setning er en egen transaksjon
