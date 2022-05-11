@@ -1,1 +1,0 @@
-Enten så gjennomføres [[Transaksjon]]en fullstendig, eller ikke i det heletatt. Om den ikke kan gjennomføres vil alt som har skjedd hitil i [[Transaksjon]]en bli rullet tilbake.

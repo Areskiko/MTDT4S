@@ -1,1 +1,3 @@
-En transaksjon er en serie med [[Operasjon]]er som skal skje [[Atomisk]]. De avsluttes med en [[Commit]]. 
+En transaksjon er en serie med [[Operasjon]] henger sammen. De avsluttes med en [[Commit]]. 
+
+Transaksjoner har visse ønskede [[Egenskaper]].
