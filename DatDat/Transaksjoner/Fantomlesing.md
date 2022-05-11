@@ -1,1 +1,2 @@
-Hvis man leser en tabell mens den blir oppdatert. Godt eksempel er nested-loop join hvor man leser samme tabell flere ganger og ønsker ikke at den blir oppdatert mens man holder på
+Hvis man leser en tabell mens den blir oppdatert. Godt eksempel er nested-loop join hvor man leser samme tabell flere ganger og ønsker ikke at den blir slettet mens man holder på.
+Kan også være at en $T_2$ setter inn en rad mens $T_1$ prøver å lese. Dette "fantomet" blir da ikke med
