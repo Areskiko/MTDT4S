@@ -18,4 +18,8 @@ Dersom $T_i$ leser fra eller overskriver et objekt skrevet av $T_j$, så må $c_
 En historie er seriell dersom alle transaksjonene foregår etterhverande i sin helhet. Altså vil $T_i$ fullføres før $T_j$ begynner.
 
 ### Serialiserbar
-En historie er serialiserbar dersom resultatet av den er ekvivalent med en seriell historie med de samme [[Transaksjon]]ene
+En historie er serialiserbar dersom resultatet av den er [[Historie#Konflikt ekvivalent]] med en seriell historie med de samme [[Transaksjon]]ene
+
+## Ekvivalens
+### Konflikt ekvivalent
+To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Conflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
