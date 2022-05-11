@@ -1,0 +1,1 @@
+Løser problemer med å gjentatt lese verdier. Ofte løst med å ta en snapshot av verdien, aka lagre verdien i en variabel og bruk den flere ganger.
