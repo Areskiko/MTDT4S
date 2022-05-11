@@ -1,0 +1,1 @@
+Du leser fra database når du vil lese fra database. Ingen hensyn til andre transaksjoner. Dette gjør det veldig paralleliserbart, men kan være at du leser en uncommited verdi. Det er kan bli feil hvis den andre transaksjonen ikke er ferdig med verdien, eller aborter.
