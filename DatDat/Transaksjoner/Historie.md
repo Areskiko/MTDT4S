@@ -12,3 +12,10 @@ Dersom $T_i$ leser fra objekt $x$ som er skrevet av $T_j$, så må $c_j<r_i[x]$
 
 ### Strict
 Dersom $T_i$ leser fra eller overskriver et objekt skrevet av $T_j$, så må $c_j<r_i[x]/w_i[x]$ eller $a_j<r_i[x]/w_i[x]$
+
+
+## Serielle transaksjoner
+En historie er seriell dersom alle transaksjonene foregår etterhverande i sin helhet. Altså vil $T_i$ fullføres før $T_j$ begynner.
+
+### Serialiserbar
+En historie er serialiserbar dersom resultatet av den er ekvivalent med en seriell historie med de samme [[Transaksjon]]ene

@@ -1,0 +1,1 @@
+Dersom to [[Transaksjon]]er skriver til samme objekt $x$ for så å skrive til det samme objektet, vil kun den siste skrivingen taes med, og det uten å ta hensyn til den tapte verdien/oppdateringen.
