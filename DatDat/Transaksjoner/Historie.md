@@ -24,6 +24,7 @@ En historie er serialiserbar dersom resultatet av den er [[Historie#Konflikt ekv
 ### Konflikt ekvivalent
 To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Conflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
 
+To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Konflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
 
-Nettside som sier om en historie er recoverable, ACA osv + contflict-serializable + L + ratio+ B+tre: 
+### Nettside som sier om en historie er recoverable, ACA osv + contflict-serializable + L + ratio+ B+tre: 
 [https://fereidani.com/tools/scheduleparser](https://fereidani.com/tools/scheduleparser "https://fereidani.com/tools/scheduleparser")

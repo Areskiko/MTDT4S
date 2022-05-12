@@ -1,0 +1,1 @@
+En [[commit | ikke-committet]] endring kan skrives til disk. Dette gjør at man potensielt må [[Undo | gjøre om]] på disse endringene.

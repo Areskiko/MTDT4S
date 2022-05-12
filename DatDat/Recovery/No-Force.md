@@ -1,0 +1,1 @@
+[[Commit | Commitede]] endringer skrives ikke nødvendigvis til disk med én gang. Hvis systemet [[Recovery etter krasj | krasjer]] kan man måtte [[Redo | gjennpprette]] disse endringene.

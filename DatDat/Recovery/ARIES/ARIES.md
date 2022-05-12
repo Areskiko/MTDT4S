@@ -1,0 +1,1 @@
+En recovery-algoritme for databasesystemer utviklet av IBM.

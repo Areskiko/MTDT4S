@@ -1,0 +1,1 @@
+[[Commit | Ikke-committede]] endringer skrives ikke til disk.
