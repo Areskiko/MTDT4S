@@ -1,0 +1,1 @@
+Ekstra indeks på et annet felt hvor det også finnes en primærindeks

@@ -1,0 +1,1 @@
+bare feltet som indeksene er på. På løvnivå er ligger nøklene og pekere til hvor resten av posten ligger i en [[Heapfil]]
