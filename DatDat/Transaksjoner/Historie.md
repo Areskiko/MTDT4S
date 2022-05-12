@@ -22,4 +22,4 @@ En historie er serialiserbar dersom resultatet av den er [[Historie#Konflikt ekv
 
 ## Ekvivalens
 ### Konflikt ekvivalent
-To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Conflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
+To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Konflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
