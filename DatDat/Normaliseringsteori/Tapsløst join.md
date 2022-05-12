@@ -9,7 +9,7 @@ Hvis R dekomponeres inn i andre tabeller R1 og R2
 
 1. $R_1 \cup R_2 = R$
 
-2. $R_1 \cap R_2 = \emptyset$
+2. $R_1 \cap R_2 \neq \emptyset$
 
 3. Snittet ovenfor må være kandidatnøkkel for minst en av $R_1 og R_2$
 
