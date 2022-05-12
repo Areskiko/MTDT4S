@@ -1,13 +1,16 @@
 Et sett med [[Transaksjon]]er som kan være sammenflettet. [[Operasjon]]ene til hver transaksjon må forekomme i samme rekkefølge som i [[Transaksjon]]ene, men kan flettes med [[Operasjon]]ene fra de andre [[Transaksjon]]ene.
 
-## Recoverability
-// TODO fix title
+Det finnes fire nivåer av recoverability. Hvor:
 
+Strict $\subset$ ACA $\subset$ Recoverable
+
+## Unrecoverable
+En transaksjon er unrecoverable dersom den ikke faller inn under noen av de andre kategoriene.
 
 ### Recoverable
 Dersom $T_i$ leser fra et objekt som $T_j$ har skrevet til,  så må $c_j<c_i$
 
-### Avoid cascading aborts
+### Avoid cascading aborts (ACA)
 Dersom $T_i$ leser fra objekt $x$ som er skrevet av $T_j$, så må $c_j<r_i[x]$
 
 ### Strict
@@ -21,7 +24,7 @@ En historie er seriell dersom alle transaksjonene foregår etterhverande i sin h
 En historie er serialiserbar dersom resultatet av den er [[Historie#Konflikt ekvivalent]] med en seriell historie med de samme [[Transaksjon]]ene
 
 ## Ekvivalens
-### Konflikt ekvivalent
+### Konfliktekvivalent
 To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Conflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
 
 To historier annses å være konfliktekvivalente dersom den relative rekkefølgen av to [[Konflikt]]ige operasjoner er den samme for alle operasjoner i begge historiene.
