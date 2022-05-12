@@ -4,3 +4,5 @@ Ta siste LSN og handling til en transaksjon.
 
 Skrives typisk som (LSN, TX, Operation). Alternativt 
 (LSN, PrevLSN, TX, Operation)
+
+#transaksjoner
