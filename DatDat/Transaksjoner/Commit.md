@@ -1,0 +1,1 @@
+En transaksjon committer når den er ferdig og vil lagre endringene den har gjort. Dette er i motsetning til [[Abort | abort]].
