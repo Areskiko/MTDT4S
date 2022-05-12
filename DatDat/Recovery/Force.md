@@ -1,0 +1,1 @@
+Alle endringer fra en transaksjon skrives til disk når transaksjoner [[Commit | committer]]. 
