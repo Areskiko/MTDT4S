@@ -16,3 +16,12 @@ En kan derfor gi ut delete låser til alle som ønsker å [[Operasjon#Read | les
 Når en [[Transaksjon]] ønsker å [[Operasjon#Write | skrive]] til et [[databaseobjekt]] er det viktig at ingen andre prøver å [[Operasjon | lese]] eller [[Operasjon#Write | skrive]] til det samme [[databaseobjekt]]et.
 
 Vi gir derfor ut en eksklusiv lås, som vil si at ingen andre kan få noen slags lås sammtidig. Dette sikrer at andre [[Transaksjon]]er venter på at den med eksklusiv lås har gjort seg ferdig før de gjør noe.
+
+## Konvertering mellom låser
+Det kan være ønskelig å konvertere lås-type. 
+
+### Til Shared
+Dersom en [[Transaksjon]] har en [[Lås#Exclusive | eksklusiv]] lås, kan den nedgraderes til en [[Lås#Shared | delt]] lås, dette lar andre også få [[Lås#Shared | delte]] låser
+
+### Til Exclusive
+Dersom en [[Transaksjon]] har en [[Lås#Shared | delt]] lås kan den oppgraderes til en [[Lås#Exclusive | eksklusiv]] lås, dette innebærer å vente til alle andre transaksjoner som har en [[Lås#Shared | delt]] lås til det [[databaseobjekt]]et dropper låsen.
