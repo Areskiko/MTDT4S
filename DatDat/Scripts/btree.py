@@ -23,7 +23,7 @@ def pretty(lists):
 def main():
     
   size =3 #int(input("Skriv inn 3 eller 4 for blokkstørrelse"))
-  seq = input("Skriv en sekvens av poster separert med mellomrom (NB, fungerer kun for trær med maks høyde 3 og 3 poster per blokk)> ")
+  seq = input("Skriv en sekvens av poster separert med mellomrom> ")
   steps = input("Skriv y for å vise steg> ")
   is_steps = steps == "y"
   seqList =[int(post) for post in seq.split()]
