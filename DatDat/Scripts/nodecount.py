@@ -8,14 +8,13 @@ def main():
     keysize = int(input("Størrelse på søkenøkkel: "))
     pointersize = int(input("Størrelse på trepeker: "))
 
-    rowperblock = math.floor(blocksize / rowsize * 2 / 3)
+    rowperblock = math.floor((blocksize / rowsize) * 2 / 3)
     print("Poster per blokk = ", rowperblock)
-    innerrowperblock = math.floor(blocksize / (keysize + pointersize) * 2 / 3)
+    innerrowperblock = math.floor((blocksize / (keysize + pointersize)) * 2 / 3)
     print("Peker/nøkkel par per blokk = ", innerrowperblock)
 
     nodes = nodecount(rowcount, rowperblock)
     print("Antall løvnoder = ", nodes)
-    
     count = 0
 
     while (nodes != 1):
