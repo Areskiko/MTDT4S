@@ -1,6 +1,10 @@
-from dis import pretty_flags
-
-def print_tree(root, level1, leafs):
+def print_tree(root, level1, leafs, remaining=[]):
+  if remaining!=[]:
+    print("Press enter to continue...")
+    print("Remaining posts:", end=" ")
+    print(remaining)
+  else:
+    print("Finished B+tree")
   print("_"*54)
   print("\t\t\t"+pretty([root]))
   if level1 != []:
@@ -10,6 +14,7 @@ def print_tree(root, level1, leafs):
 
 
 def pretty(lists):
+  if(len(lists[0])):
     sum=""
     for list in lists:
       out= "["
@@ -19,12 +24,13 @@ def pretty(lists):
       out += "]\t\t"
       sum += out
     return sum
+  return ""
 
 def main():
     
   size =3 #int(input("Skriv inn 3 eller 4 for blokkstørrelse"))
-  seq = input("Skriv en sekvens av poster separert med mellomrom> ")
-  steps = input("Skriv y for å vise steg> ")
+  seq = input("Skriv en sekvens av poster separert med mellomrom >")
+  steps = input("Skriv y for å vise steg >")
   is_steps = steps == "y"
   seqList =[int(post) for post in seq.split()]
 
@@ -35,8 +41,8 @@ def main():
     leafs = []
     
     while seqList:
-      if(steps):
-        print_tree(root, level1, leafs)
+      if(is_steps):
+        print_tree(root, level1, leafs, seqList)
         input()
       post = seqList.pop(0)   
 
@@ -136,9 +142,8 @@ def main():
             
         else: #no split needed, insert at right pos
           leafs[leaf_i].insert(j, post)
-
- 
-    print_tree(root, level1, leafs)
+  
+  print_tree(root, level1, leafs) 
 
 main()
 input()
