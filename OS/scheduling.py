@@ -195,7 +195,7 @@ if __name__ == "__main__":
     list2 = SJF([copy.copy(x) for x in execution_list])
     pp(list2, list2)
     print("RR:")
-    list1, list2 = RR([copy.copy(x) for x in execution_list], 6)
+    list, list2 = RR([copy.copy(x) for x in execution_list], 6)
     pp(list, list2)
     print("SRTF:")
     list, list2, works = SRTF([copy.copy(x) for x in execution_list])
