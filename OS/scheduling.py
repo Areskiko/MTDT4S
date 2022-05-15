@@ -83,6 +83,15 @@ def SJF(processes):
     return processes
 
 def RR(processes: list[Process], quantum):
+    """
+    > The function takes a list of processes and a quantum value, and returns a list of processes in the
+    order they were executed
+
+    :param processes: list[Process]
+    :type processes: list[Process]
+    :param quantum: the time slice for each process
+    :return: A list of processes that have been executed in the order they were executed.
+    """
     result_list = []
     temp_queue = []
     done_list = []
@@ -99,6 +108,7 @@ def RR(processes: list[Process], quantum):
         if current == None:
             current = temp_queue.pop(0)
         current.burst -= 1
+        counter += 1
         if current.burst == 0:
             current.end_time = i + 1
             result_list.append(current)
@@ -110,14 +120,39 @@ def RR(processes: list[Process], quantum):
                 result_list.append(current)
                 temp_queue.append(current)
                 current = temp_queue.pop(0)
-            counter += 1
     return result_list
 
 
-def SRTF(processes):
+def SRTF(processes: list[Process]):
+    processes.sort(key=lambda x: x.arrival)
     result_list = []
-    temp_queue = []
+    arrived = []
     done_list = []
+    arrival_time = 0
+    prev_current = None
+    while True:
+        arrived.extend([x for x in processes if x.arrival <= arrival_time and x not in done_list and x not in arrived])
+        current = min(arrived, key=lambda x: x.burst)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
+        current.burst -= 1
+        if current.burst == 0:
+            arrived.remove(current)
+            done_list.append(current)
+
+        arrival_time += 1
+        if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
+            return result_list
+            break
+
+
+
+
+
 
 def pp(processes: list[Process]) -> None:
     print("processes", [x.id for x in processes])
@@ -137,5 +172,7 @@ if __name__ == "__main__":
     # pp(list)
     # list2 = SJF(execution_list)
     # pp(list2)
-    list = RR(execution_list, 6)
+    # list = RR(execution_list, 6)
+    # pp(list)
+    list = SRTF(execution_list)
     pp(list)
