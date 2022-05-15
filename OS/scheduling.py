@@ -178,7 +178,6 @@ def pp(processes: list[Process], processes_for_time: list[Process], works=None) 
         et = [str(time).rjust(2) for time in works]
     else:
         et = [str(x.end_time).rjust(2) for x in processes]
-
     avg = sum(x.end_time - x.optimal_end_time for x in processes_for_time) / \
         len(processes_for_time)
 
@@ -197,12 +196,12 @@ if __name__ == "__main__":
     print("FCFS:")
     list = FCFS([copy.copy(x) for x in execution_list])
     pp(list, list)
-    print("SJF:")
+    print("\nSJF:")
     list2 = SJF([copy.copy(x) for x in execution_list])
     pp(list2, list2)
-    print("RR:")
+    print("\nRR:")
     list, list2, works = RR([copy.copy(x) for x in execution_list], 6)
     pp(list, list2, works)
-    print("SRTF:")
+    print("\nSRTF:")
     list, list2, works = SRTF([copy.copy(x) for x in execution_list])
     pp(list, list2, works)
