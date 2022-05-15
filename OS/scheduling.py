@@ -132,6 +132,30 @@ def RR(processes: list[Process], quantum):
 
 
 def SRTF(processes: list[Process]):
+    """
+    It takes a list of processes, sorts them by arrival time, then iterates through the list, keeping
+    track of the current process, the previous process, and the processes that have arrived but not yet
+    been processed.
+
+    It then finds the process with the shortest burst time, and subtracts one from its burst time. If
+    the current process is the same as the previous process, it adds one to the current work time. If
+    the current process is different from the previous process, it adds the current work time to the
+    list of work times.
+
+    If the current process has a burst time of zero, it removes it from the list of arrived processes
+    and adds it to the list of done processes.
+
+    It then increments the arrival time and the current work time.
+
+    If there are no more arrived processes, it sets the end time of the current process to the current
+    arrival time, adds the current process to the list of result processes, and
+
+    :param processes: list[Process]
+    :type processes: list[Process]
+    :return: a tuple of three lists. The first list is a list of processes that have been completed. The
+    second list is the original list of processes. The third list is a list of the number of processes
+    that were in the ready queue at each time unit.
+    """
     processes.sort(key=lambda x: x.arrival)
     works = []
     result_list = []
