@@ -2,6 +2,9 @@
 
 
 
+import copy
+
+
 class Process:
     def __init__(self, arrival, burst, id):
         self.arrival = arrival
@@ -175,14 +178,14 @@ if __name__ == "__main__":
         6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
 
     print("FCFS:")
-    list = FCFS(execution_list)
+    list = FCFS([copy.copy(x) for x in execution_list])
     pp(list)
     print("SJF:")
-    list2 = SJF(execution_list)
+    list2 = SJF([copy.copy(x) for x in execution_list])
     pp(list2)
     print("RR:")
-    list = RR(execution_list, 6)
+    list = RR([copy.copy(x) for x in execution_list], 6)
     pp(list)
     print("SRTF:")
-    list, works = SRTF(execution_list)
+    list, works = SRTF([copy.copy(x) for x in execution_list])
     pp(list, works)
