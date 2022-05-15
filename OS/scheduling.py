@@ -1,16 +1,16 @@
 
 
-
-
 import copy
 
 
 class Process:
-    def __init__(self, arrival, burst, id):
+    def __init__(self, arrival, burst, id, priority=0):
         self.arrival = arrival
         self.burst = burst
         self.id = id
+        self.priority = priority
         self.remaining = burst
+        self.optimal_end_time = 0
         self.start_time = 0
         self.end_time = 0
         self.waiting_time = 0
@@ -28,6 +28,7 @@ def FCFS(processes: list[Process]):
     :param processes: list of Process objects
     :return: A list of processes
     """
+    optimal_end_time(processes)
     processes.sort(key=lambda x: x.arrival)
     processes[0].start_time = processes[0].arrival
     processes[0].end_time = processes[0].burst + processes[0].start_time
@@ -48,8 +49,10 @@ def FCFS(processes: list[Process]):
 def list_swap(list, pos1, pos2):
     list[pos1], list[pos2] = list[pos2], list[pos1]
 
+
 def total_compute_time(processes: list[Process]) -> int:
     return sum(x.burst for x in processes)
+
 
 def SJF(processes: list[Process]):
     """
@@ -62,6 +65,7 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
+    optimal_end_time(processes)
     processes[0].start_time = processes[0].arrival
     processes[0].end_time = processes[0].burst + processes[0].start_time
     processes[0].waiting_time = processes[0].start_time - processes[0].arrival
@@ -81,6 +85,7 @@ def SJF(processes: list[Process]):
             processes[i].arrival
     return processes
 
+
 def RR(processes: list[Process], quantum):
     """
     > The function takes a list of processes and a quantum value, and returns a list of processes in the
@@ -91,6 +96,7 @@ def RR(processes: list[Process], quantum):
     :param quantum: the time slice for each process
     :return: A list of processes that have been executed in the order they were executed.
     """
+    optimal_end_time(processes)
     result_list = []
     temp_queue = []
     done_list = []
@@ -106,11 +112,14 @@ def RR(processes: list[Process], quantum):
                 temp_queue.append(process)
         if current == None:
             current = temp_queue.pop(0)
+            if current not in result_list:
+                current.start_time = i
         current.burst -= 1
         counter += 1
         if current.burst == 0:
             current.end_time = i + 1
             result_list.append(current)
+            current.waiting_time = current.end_time - current.arrival - current.burst
             done_list.append(current)
             counter = 0
             current = None
@@ -119,11 +128,12 @@ def RR(processes: list[Process], quantum):
                 result_list.append(current)
                 temp_queue.append(current)
                 current = temp_queue.pop(0)
-    return result_list
+    return result_list, processes
 
 
 def SRTF(processes: list[Process]):
     processes.sort(key=lambda x: x.arrival)
+    optimal_end_time(processes)
     works = []
     result_list = []
     arrived = []
@@ -133,7 +143,8 @@ def SRTF(processes: list[Process]):
     current = None
     c = 1
     while True:
-        arrived.extend([x for x in processes if x.arrival <= arrival_time and x not in done_list and x not in arrived])
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
         old = current
         current = min(arrived, key=lambda x: x.burst)
         if current != prev_current and prev_current != None:
@@ -153,24 +164,23 @@ def SRTF(processes: list[Process]):
         if not arrived:
             current.end_time = arrival_time
             result_list.append(current)
-            return result_list, works
-            break
+            return result_list, processes, works
         c += 1
 
 
+def optimal_end_time(processes: list[Process]):
+    for process in processes:
+        process.optimal_end_time = process.burst + process.arrival
 
 
-
-
-def pp(processes: list[Process], works = None) -> None:
+def pp(processes: list[Process], processes_for_time: list[Process], works=None) -> None:
     print("processes", [x.id for x in processes])
-    print("end_time", (works if works != None else [x.end_time for x in processes]))
-    print("optimal end time", [x.optimal_end_time for x in processes])
-    print("difference", [x.end_time - x.optimal_end_time for x in processes])
+    print("end_time", (works if works != None else [
+          x.end_time for x in processes]))
     print("average waiting time: ", sum(
-        x.optimal_end_time for x in processes)/len(processes))
+        x.end_time - x.optimal_end_time for x in processes_for_time)/len(processes_for_time))
     # print("Average turnaround time: ", sum(
-        # x.turnaround_time for x in processes)/len(processes))
+    # x.turnaround_time for x in processes)/len(processes))
 
 
 if __name__ == "__main__":
@@ -179,13 +189,13 @@ if __name__ == "__main__":
 
     print("FCFS:")
     list = FCFS([copy.copy(x) for x in execution_list])
-    pp(list)
+    pp(list, list)
     print("SJF:")
     list2 = SJF([copy.copy(x) for x in execution_list])
-    pp(list2)
+    pp(list2, list2)
     print("RR:")
-    list = RR([copy.copy(x) for x in execution_list], 6)
-    pp(list)
+    list1, list2 = RR([copy.copy(x) for x in execution_list], 6)
+    pp(list, list2)
     print("SRTF:")
-    list, works = SRTF([copy.copy(x) for x in execution_list])
-    pp(list, works)
+    list, list2, works = SRTF([copy.copy(x) for x in execution_list])
+    pp(list, list2, works)
