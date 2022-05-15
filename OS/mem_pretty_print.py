@@ -1,3 +1,4 @@
+from sys import maxsize
 #list[list[float]]
 def pp(frames) -> None:
     """
@@ -9,6 +10,8 @@ def pp(frames) -> None:
         print('Frame{}'.format(i), end='')
         for value in frame:
             value = value if value != None else 'X'
+            value = value if value != -1 else 'X'
+            value = value if value != maxsize else 'X'
             print(' |{:>2}'.format(value), end='')
         print()
         print("-"*(len(frame)*5))
