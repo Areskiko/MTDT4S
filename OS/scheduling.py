@@ -10,7 +10,7 @@ class Process:
         self.id = id
         self.priority = priority
         self.remaining = burst
-        self.optimal_end_time = 0
+        self.optimal_end_time = arrival + burst
         self.start_time = 0
         self.end_time = 0
         self.waiting_time = 0
@@ -28,7 +28,6 @@ def FCFS(processes: list[Process]):
     :param processes: list of Process objects
     :return: A list of processes
     """
-    optimal_end_time(processes)
     processes.sort(key=lambda x: x.arrival)
     processes[0].start_time = processes[0].arrival
     processes[0].end_time = processes[0].burst + processes[0].start_time
@@ -65,7 +64,6 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
-    optimal_end_time(processes)
     processes[0].start_time = processes[0].arrival
     processes[0].end_time = processes[0].burst + processes[0].start_time
     processes[0].waiting_time = processes[0].start_time - processes[0].arrival
@@ -96,7 +94,6 @@ def RR(processes: list[Process], quantum):
     :param quantum: the time slice for each process
     :return: A list of processes that have been executed in the order they were executed.
     """
-    optimal_end_time(processes)
     result_list = []
     temp_queue = []
     done_list = []
@@ -136,7 +133,6 @@ def RR(processes: list[Process], quantum):
 
 def SRTF(processes: list[Process]):
     processes.sort(key=lambda x: x.arrival)
-    optimal_end_time(processes)
     works = []
     result_list = []
     arrived = []
@@ -177,11 +173,18 @@ def optimal_end_time(processes: list[Process]):
 
 
 def pp(processes: list[Process], processes_for_time: list[Process], works=None) -> None:
-    print("processes", [x.id for x in processes])
-    print("end_time", (works if works != None else [
-          x.end_time for x in processes]))
-    print("average waiting time: ", sum(
-        x.end_time - x.optimal_end_time for x in processes_for_time)/len(processes_for_time))
+    p = [str(x.id).rjust(2) for x in processes]
+    if works:
+        et = [str(time).rjust(2) for time in works]
+    else:
+        et = [str(x.end_time).rjust(2) for x in processes]
+
+    avg = sum(x.end_time - x.optimal_end_time for x in processes_for_time) / \
+        len(processes_for_time)
+
+    print("Processes (per round)", " | ".join(p))
+    print("End times (per round)", " | ".join(et))
+    print("average waiting time (per process)", avg)
     # print("Average turnaround time: ", sum(
     # x.turnaround_time for x in processes)/len(processes))
 
