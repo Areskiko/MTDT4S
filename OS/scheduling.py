@@ -186,6 +186,7 @@ def pp(processes: list[Process], processes_for_time: list[Process], works=None) 
 if __name__ == "__main__":
     execution_list = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
         6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
+    # execution_list = [Process(0,10,1), Process(0,1,2), Process(0,2,3), Process(0,1,4), Process(0,5,5)]
 
     print("FCFS:")
     list = FCFS([copy.copy(x) for x in execution_list])
@@ -199,3 +200,5 @@ if __name__ == "__main__":
     print("SRTF:")
     list, list2, works = SRTF([copy.copy(x) for x in execution_list])
     pp(list, list2, works)
+
+
