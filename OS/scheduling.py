@@ -121,19 +121,27 @@ def RR(processes: list[Process], quantum):
 
 def SRTF(processes: list[Process]):
     processes.sort(key=lambda x: x.arrival)
+    works = []
     result_list = []
     arrived = []
     done_list = []
     arrival_time = 0
     prev_current = None
+    current = None
+    c = 1
     while True:
         arrived.extend([x for x in processes if x.arrival <= arrival_time and x not in done_list and x not in arrived])
+        old = current
         current = min(arrived, key=lambda x: x.burst)
         if current != prev_current and prev_current != None:
             prev_current.end_time = arrival_time
             result_list.append(prev_current)
         prev_current = current
         current.burst -= 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
         if current.burst == 0:
             arrived.remove(current)
             done_list.append(current)
@@ -142,19 +150,22 @@ def SRTF(processes: list[Process]):
         if not arrived:
             current.end_time = arrival_time
             result_list.append(current)
-            return result_list
+            return result_list, works
             break
+        c += 1
 
 
 
 
 
 
-def pp(processes: list[Process]) -> None:
+def pp(processes: list[Process], works = None) -> None:
     print("processes", [x.id for x in processes])
-    print("end_time", [x.end_time for x in processes])
-    print("waiting time", [x.waiting_time for x in processes])
-    print("average waiting time: ", sum([x.waiting_time for x in processes]) / len(processes))
+    print("end_time", (works if works != None else [x.end_time for x in processes]))
+    print("optimal end time", [x.optimal_end_time for x in processes])
+    print("difference", [x.end_time - x.optimal_end_time for x in processes])
+    print("average waiting time: ", sum(
+        x.optimal_end_time for x in processes)/len(processes))
     # print("Average turnaround time: ", sum(
         # x.turnaround_time for x in processes)/len(processes))
 
@@ -162,11 +173,16 @@ def pp(processes: list[Process]) -> None:
 if __name__ == "__main__":
     execution_list = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
         6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
+
+    print("FCFS:")
     list = FCFS(execution_list)
     pp(list)
-    # list2 = SJF(execution_list)
-    # pp(list2)
-    # list = RR(execution_list, 6)
-    # pp(list)
-    # list = SRTF(execution_list)
-    # pp(list)
+    print("SJF:")
+    list2 = SJF(execution_list)
+    pp(list2)
+    print("RR:")
+    list = RR(execution_list, 6)
+    pp(list)
+    print("SRTF:")
+    list, works = SRTF(execution_list)
+    pp(list, works)
