@@ -102,6 +102,7 @@ def RR(processes: list[Process], quantum):
     done_list = []
     current: Process = None
     counter = 0
+    works = []
     for i in range(total_compute_time(processes)):
         a = True
         for process in processes:
@@ -117,6 +118,7 @@ def RR(processes: list[Process], quantum):
         current.burst -= 1
         counter += 1
         if current.burst == 0:
+            works.append(i + 1)
             current.end_time = i + 1
             result_list.append(current)
             current.waiting_time = current.end_time - current.arrival - current.burst
@@ -125,10 +127,11 @@ def RR(processes: list[Process], quantum):
             current = None
         else:
             if counter % quantum == 0 and counter != 0:
+                works.append(i + 1)
                 result_list.append(current)
                 temp_queue.append(current)
                 current = temp_queue.pop(0)
-    return result_list, processes
+    return result_list, processes, works
 
 
 def SRTF(processes: list[Process]):
@@ -195,10 +198,8 @@ if __name__ == "__main__":
     list2 = SJF([copy.copy(x) for x in execution_list])
     pp(list2, list2)
     print("RR:")
-    list, list2 = RR([copy.copy(x) for x in execution_list], 6)
-    pp(list, list2)
+    list, list2, works = RR([copy.copy(x) for x in execution_list], 6)
+    pp(list, list2, works)
     print("SRTF:")
     list, list2, works = SRTF([copy.copy(x) for x in execution_list])
     pp(list, list2, works)
-
-
