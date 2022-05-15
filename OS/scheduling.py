@@ -23,6 +23,8 @@ def FCFS(processes):
         processes[i].start_time = processes[i-1].end_time
         processes[i].end_time = processes[i].burst + processes[i].start_time
         processes[i].waiting_time = processes[i].start_time - processes[i].arrival
+        if processes[i].waiting_time < 0:
+            processes[i].waiting_time = 0
         processes[i].turnaround_time = processes[i].end_time - processes[i].arrival
     return processes
 
@@ -32,6 +34,7 @@ def SJF(processes):
 
 def pp(processes: list[Process]) -> None:
     print("processes", [x.id for x in processes])
+    print("end_time", [x.end_time for x in processes])
     print("average waiting time: ", sum(x.waiting_time for x in processes)/len(processes))
 
 
