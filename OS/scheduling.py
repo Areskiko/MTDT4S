@@ -1,5 +1,3 @@
-
-
 import copy
 
 
@@ -64,24 +62,25 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
-    processes[0].start_time = processes[0].arrival
-    processes[0].end_time = processes[0].burst + processes[0].start_time
-    processes[0].waiting_time = processes[0].start_time - processes[0].arrival
-    processes[0].turnaround_time = processes[0].end_time - processes[0].arrival
-    for i in range(1, len(processes)):
-        possible_canditates = [x for x in processes[i:]
-                               if x.arrival <= processes[i-1].end_time]
-        possible_canditates.sort(key=lambda x: x.burst)
-        list_swap(processes, i, processes.index(possible_canditates[0]))
-        processes[i].start_time = processes[i-1].end_time
-        processes[i].end_time = processes[i].burst + processes[i].start_time
-        processes[i].waiting_time = processes[i].start_time - \
-            processes[i].arrival
-        if processes[i].waiting_time < 0:
-            processes[i].waiting_time = 0
-        processes[i].turnaround_time = processes[i].end_time - \
-            processes[i].arrival
-    return processes
+    result_list = []
+    arrived = []
+    done_list = []
+    current: Process = None
+    counter = 0
+    works = []
+    arrival_time = 0
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        arrived.sort(key=lambda x: x.burst)
+        current = arrived.pop(0)
+        while current.burst != 0:
+            current.burst -= 1
+            arrival_time += 1
+        current.end_time = arrival_time
+        done_list.append(current)
+        if len(done_list) == len(processes):
+            return done_list, processes
 
 
 def RR(processes: list[Process], quantum):
@@ -191,6 +190,123 @@ def SRTF(processes: list[Process]):
         c += 1
 
 
+def HRRN(processes: list[Process]):
+    """
+    Calculates the response time for a process, given as (w+b)/b where w is how long the process has waited, and b is the burst time for the process.
+    The algorithm then chooses the process with the highest response time, and runs it.
+    """
+    processes.sort(key=lambda x: x.arrival)
+    works = []
+    result_list = []
+    arrived = []
+    done_list = []
+    arrival_time = 0
+    prev_current = None
+    current = None
+    c = 1
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        old = current
+        current = min(arrived, key=lambda x: (x.burst+x.waiting_time)/x.burst)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
+        current.burst -= 1
+        for p in arrived:
+            p.waiting_time += 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
+        if current.burst == 0:
+            arrived.remove(current)
+            done_list.append(current)
+
+        arrival_time += 1
+        if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
+            return result_list, processes, works
+        c += 1
+
+
+def NPP(processes: list[Process]):
+    arrival_time = 0
+    arrived = []
+    done_list = []
+    works = []
+    result_list = []
+    current = None
+    prev_current = None
+    c = 1
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        old = current
+        current = min(arrived, key=lambda x: x.priority)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
+        current.burst -= 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
+        if current.burst == 0:
+            arrived.remove(current)
+            done_list.append(current)
+        arrival_time += 1
+        if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
+            return result_list, processes, works
+        c += 1
+
+
+def MLM(processes: list[Process]):
+    for p in processes:
+        p.priority = 1
+    arrival_time = 0
+    arrived = []
+    done_list = []
+    works = []
+    result_list = []
+    current = None
+    prev_current = None
+    c = 1
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        old = current
+        current = min(arrived, key=lambda x: x.priority)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
+        q = min(2 ** (current.priority - 1), current.burst)
+        current.burst -= q
+        current.priority += 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
+        if current.burst == 0:
+            arrived.remove(current)
+            done_list.append(current)
+        else:
+            arrived.remove(current)
+            arrived.append(current)
+        arrival_time += q
+        if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
+            return result_list, processes, works
+        c += q
+
+
 def optimal_end_time(processes: list[Process]):
     for process in processes:
         process.optimal_end_time = process.burst + process.arrival
@@ -256,6 +372,7 @@ def main():
     result, result, works = RR([copy.copy(x) for x in processes], 6)
     pp(result, works=works)
     print("\nSRTF:")
+
     result, result, works = SRTF([copy.copy(x) for x in processes])
     pp(result, works=works)
 
