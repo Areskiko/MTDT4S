@@ -62,9 +62,12 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
+    result_list = []
     arrived = []
     done_list = []
     current: Process = None
+    counter = 0
+    works = []
     arrival_time = 0
     while True:
         arrived.extend([x for x in processes if x.arrival <=
@@ -230,16 +233,6 @@ def HRRN(processes: list[Process]):
 
 
 def NPP(processes: list[Process]):
-    """
-    It takes a list of processes, and returns a list of processes with their end times, the original
-    list of processes, and a list of the number of processes that were in the ready queue at each time
-    unit
-
-    :param processes: list[Process]
-    :type processes: list[Process]
-    :return: a list of processes, the original list of processes, and a list of the number of times each
-    process was worked on.
-    """
     arrival_time = 0
     arrived = []
     done_list = []
@@ -273,17 +266,7 @@ def NPP(processes: list[Process]):
         c += 1
 
 
-def MLFB(processes: list[Process]):
-    """
-    It takes a list of processes, and returns a list of processes with their end times, the original
-    list of processes, and a list of the number of cycles each process ran for
-
-    :param processes: list[Process]
-    :type processes: list[Process]
-    :return: a tuple of three lists. The first list is a list of processes that have been executed. The
-    second list is the original list of processes. The third list is a list of the time each process was
-    executed.
-    """
+def MLM(processes: list[Process]):
     for p in processes:
         p.priority = 1
     arrival_time = 0
@@ -337,19 +320,29 @@ def pp(processes: list[Process], processes_for_time: list[Process] = None, works
         et = [str(time).rjust(2) for time in works]
     else:
         et = [str(x.end_time).rjust(2) for x in processes]
+    tt = [x.end_time - x.arrival for x in processes_for_time]
     avg = sum(x.end_time - x.optimal_end_time for x in processes_for_time) / \
         len(processes_for_time)
 
-    print("Processes (per round)", " | ".join(p))
-    print("End times (per round)", " | ".join(et))
-    print("average waiting time (per process)", avg)
-    # print("Average turnaround time: ", sum(
-    # x.turnaround_time for x in processes)/len(processes))
+    print("ID:                     ", " | ".join(list(str(i).rjust(2)
+          for i in range(len(processes_for_time)))))
+    print("Optimal turnaround time:", " | ".join(str(x.optimal_end_time).rjust(2)
+          for x in processes_for_time))
+    print("Turnaround time:        ", " | ".join(
+        str(time).rjust(2) for time in tt))
+    print("Average turnaround time:", round(
+        sum(tt)/len(processes), 3))
+    print("Average waiting time (actual - optimal):", round(avg, 3), end="\n\n")
+
+    print("Processes (per round):", " | ".join(p))
+    print("End times (per round):", " | ".join(et))
+    print("---------------------------------------------------")
 
 
 def main():
     string_input = input(
         "Enter processes.\nFormat: arrival burst priority,...,arrival burst priority\n: ")
+    quantum = int(input("Enter quantum: "))
     process_strings = string_input.split(",")
     processes: list[Process] = []
     id = 1
@@ -367,7 +360,7 @@ def main():
     result = SJF([copy.copy(x) for x in processes])
     pp(result)
     print("\nRR:")
-    result, result2, works = RR([copy.copy(x) for x in processes], 6)
+    result, result2, works = RR([copy.copy(x) for x in processes], quantum)
     pp(result, result2, works)
     print("\nSRTF:")
     result, result2, works = SRTF([copy.copy(x) for x in processes])
@@ -378,10 +371,10 @@ def main():
     print("\nNPP:")
     list, list2, works = NPP([copy.copy(x) for x in processes])
     pp(list, list2, works)
-    print("\nMLFB:")
-    list, list2, works = MLFB([copy.copy(x) for x in processes])
+    print("\nMLM:")
+    list, list2, works = MLM([copy.copy(x) for x in processes])
     pp(list, list2, works)
-    input("Press enter to exit")
+    input("Enter to exit.")
 
 
 if __name__ == "__main__":
