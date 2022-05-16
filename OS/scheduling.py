@@ -80,7 +80,7 @@ def SJF(processes: list[Process]):
         current.end_time = arrival_time
         done_list.append(current)
         if len(done_list) == len(processes):
-            return done_list, processes
+            return done_list
 
 
 def RR(processes: list[Process], quantum):
@@ -330,25 +330,6 @@ def pp(processes: list[Process], processes_for_time: list[Process] = None, works
     # x.turnaround_time for x in processes)/len(processes))
 
 
-# if __name__ == "__main__":
-#     processes = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
-#         6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
-#     # execution_list = [Process(0,10,1), Process(0,1,2), Process(0,2,3), Process(0,1,4), Process(0,5,5)]
-
-#     print("FCFS:")
-#     list = FCFS([copy.copy(x) for x in processes])
-#     pp(list, list)
-#     print("\nSJF:")
-#     list2 = SJF([copy.copy(x) for x in processes])
-#     pp(list2, list2)
-#     print("\nRR:")
-#     list, list2, works = RR([copy.copy(x) for x in processes], 6)
-#     pp(list, list2, works)
-#     print("\nSRTF:")
-#     list, list2, works = SRTF([copy.copy(x) for x in processes])
-#     pp(list, list2, works)
-
-
 def main():
     string_input = input(
         "Enter processes, format = arrival burst priority, ... ,arrival burst priority: ")
@@ -369,12 +350,20 @@ def main():
     result = SJF([copy.copy(x) for x in processes])
     pp(result)
     print("\nRR:")
-    result, result, works = RR([copy.copy(x) for x in processes], 6)
-    pp(result, works=works)
+    result, result2, works = RR([copy.copy(x) for x in processes], 6)
+    pp(result, result2, works)
     print("\nSRTF:")
-
-    result, result, works = SRTF([copy.copy(x) for x in processes])
-    pp(result, works=works)
+    result, result2, works = SRTF([copy.copy(x) for x in processes])
+    pp(result, result2, works)
+    print("\nHRRN:")
+    list, list2, works = HRRN([copy.copy(x) for x in processes])
+    pp(list, list2, works)
+    print("\nNPP:")
+    list, list2, works = NPP([copy.copy(x) for x in processes])
+    pp(list, list2, works)
+    print("\nMLM:")
+    list, list2, works = MLM([copy.copy(x) for x in processes])
+    pp(list, list2, works)
 
 
 if __name__ == "__main__":
