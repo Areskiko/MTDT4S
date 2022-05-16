@@ -62,12 +62,9 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
-    result_list = []
     arrived = []
     done_list = []
     current: Process = None
-    counter = 0
-    works = []
     arrival_time = 0
     while True:
         arrived.extend([x for x in processes if x.arrival <=
@@ -233,6 +230,16 @@ def HRRN(processes: list[Process]):
 
 
 def NPP(processes: list[Process]):
+    """
+    It takes a list of processes, and returns a list of processes with their end times, the original
+    list of processes, and a list of the number of processes that were in the ready queue at each time
+    unit
+
+    :param processes: list[Process]
+    :type processes: list[Process]
+    :return: a list of processes, the original list of processes, and a list of the number of times each
+    process was worked on.
+    """
     arrival_time = 0
     arrived = []
     done_list = []
@@ -266,7 +273,7 @@ def NPP(processes: list[Process]):
         c += 1
 
 
-def MLM(processes: list[Process]):
+def MLFB(processes: list[Process]):
     for p in processes:
         p.priority = 1
     arrival_time = 0
@@ -361,8 +368,8 @@ def main():
     print("\nNPP:")
     list, list2, works = NPP([copy.copy(x) for x in processes])
     pp(list, list2, works)
-    print("\nMLM:")
-    list, list2, works = MLM([copy.copy(x) for x in processes])
+    print("\nMLFB:")
+    list, list2, works = MLFB([copy.copy(x) for x in processes])
     pp(list, list2, works)
 
 
