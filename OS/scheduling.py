@@ -66,24 +66,26 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
-    processes[0].start_time = processes[0].arrival
-    processes[0].end_time = processes[0].burst + processes[0].start_time
-    processes[0].waiting_time = processes[0].start_time - processes[0].arrival
-    processes[0].turnaround_time = processes[0].end_time - processes[0].arrival
-    for i in range(1, len(processes)):
-        possible_canditates = [x for x in processes[i:]
-                               if x.arrival <= processes[i-1].end_time]
-        possible_canditates.sort(key=lambda x: x.burst)
-        list_swap(processes, i, processes.index(possible_canditates[0]))
-        processes[i].start_time = processes[i-1].end_time
-        processes[i].end_time = processes[i].burst + processes[i].start_time
-        processes[i].waiting_time = processes[i].start_time - \
-            processes[i].arrival
-        if processes[i].waiting_time < 0:
-            processes[i].waiting_time = 0
-        processes[i].turnaround_time = processes[i].end_time - \
-            processes[i].arrival
-    return processes
+    result_list = []
+    arrived = []
+    done_list = []
+    current: Process = None
+    counter = 0
+    works = []
+    arrival_time = 0
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        arrived.sort(key=lambda x: x.burst)
+        current = arrived.pop(0)
+        while current.burst != 0:
+            current.burst -= 1
+            arrival_time += 1
+        current.end_time = arrival_time
+        done_list.append(current)
+        if len(done_list) == len(processes):
+            return done_list, processes
+
 
 
 def RR(processes: list[Process], quantum):
@@ -298,8 +300,8 @@ if __name__ == "__main__":
     list = FCFS([copy.copy(x) for x in execution_list])
     pp(list, list)
     print("\nSJF/SPN:")
-    list2 = SJF([copy.copy(x) for x in execution_list])
-    pp(list2, list2)
+    list1, list2 = SJF([copy.copy(x) for x in execution_list])
+    pp(list1, list2)
     print("\nRR:")
     list, list2, works = RR([copy.copy(x) for x in execution_list], 6)
     pp(list, list2, works)
