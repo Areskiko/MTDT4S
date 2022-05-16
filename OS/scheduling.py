@@ -349,7 +349,7 @@ def pp(processes: list[Process], processes_for_time: list[Process] = None, works
 
 def main():
     string_input = input(
-        "Enter processes, format = arrival burst priority, ... ,arrival burst priority: ")
+        "Enter processes.\nFormat: arrival burst priority,...,arrival burst priority\n: ")
     process_strings = string_input.split(",")
     processes: list[Process] = []
     id = 1
