@@ -274,6 +274,16 @@ def NPP(processes: list[Process]):
 
 
 def MLFB(processes: list[Process]):
+    """
+    It takes a list of processes, and returns a list of processes with their end times, the original
+    list of processes, and a list of the number of cycles each process ran for
+
+    :param processes: list[Process]
+    :type processes: list[Process]
+    :return: a tuple of three lists. The first list is a list of processes that have been executed. The
+    second list is the original list of processes. The third list is a list of the time each process was
+    executed.
+    """
     for p in processes:
         p.priority = 1
     arrival_time = 0
