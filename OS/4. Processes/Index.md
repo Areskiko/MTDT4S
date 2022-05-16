@@ -43,7 +43,10 @@ If a process is going from running to ready (without being completed) it is `pre
 Rest are children of Init.
 Every process other than swapper is a child process
 
-Any process that is orphaned (parent is killed, or exits) gets init as its parent
+Any process that is orphaned (parent is killed, or exits) gets adopted by init
+
+TODO
+Zombies
 
 ## Unix shells
 A shell is a wrapper around the OS core.
