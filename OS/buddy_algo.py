@@ -35,3 +35,4 @@ for i in range(len(input_list)):
 
 
 print("\nMemory List: ", memory_list)
+input("Press enter to continue...")
