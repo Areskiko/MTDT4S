@@ -1,7 +1,4 @@
-
-
 import copy
-from typing import List
 
 
 class Process:
@@ -65,12 +62,9 @@ def SJF(processes: list[Process]):
     :param processes: a list of Process objects
     :return: A list of processes
     """
-    result_list = []
     arrived = []
     done_list = []
     current: Process = None
-    counter = 0
-    works = []
     arrival_time = 0
     while True:
         arrived.extend([x for x in processes if x.arrival <=
@@ -83,8 +77,7 @@ def SJF(processes: list[Process]):
         current.end_time = arrival_time
         done_list.append(current)
         if len(done_list) == len(processes):
-            return done_list, processes
-
+            return done_list
 
 
 def RR(processes: list[Process], quantum):
@@ -193,6 +186,7 @@ def SRTF(processes: list[Process]):
             return result_list, processes, works
         c += 1
 
+
 def HRRN(processes: list[Process]):
     """
     Calculates the response time for a process, given as (w+b)/b where w is how long the process has waited, and b is the burst time for the process.
@@ -233,8 +227,19 @@ def HRRN(processes: list[Process]):
             result_list.append(current)
             return result_list, processes, works
         c += 1
-    
+
+
 def NPP(processes: list[Process]):
+    """
+    It takes a list of processes, and returns a list of processes with their end times, the original
+    list of processes, and a list of the number of processes that were in the ready queue at each time
+    unit
+
+    :param processes: list[Process]
+    :type processes: list[Process]
+    :return: a list of processes, the original list of processes, and a list of the number of times each
+    process was worked on.
+    """
     arrival_time = 0
     arrived = []
     done_list = []
@@ -267,7 +272,18 @@ def NPP(processes: list[Process]):
             return result_list, processes, works
         c += 1
 
-def MLM(processes: list[Process]):
+
+def MLFB(processes: list[Process]):
+    """
+    It takes a list of processes, and returns a list of processes with their end times, the original
+    list of processes, and a list of the number of cycles each process ran for
+
+    :param processes: list[Process]
+    :type processes: list[Process]
+    :return: a tuple of three lists. The first list is a list of processes that have been executed. The
+    second list is the original list of processes. The third list is a list of the time each process was
+    executed.
+    """
     for p in processes:
         p.priority = 1
     arrival_time = 0
@@ -307,12 +323,15 @@ def MLM(processes: list[Process]):
             return result_list, processes, works
         c += q
 
+
 def optimal_end_time(processes: list[Process]):
     for process in processes:
         process.optimal_end_time = process.burst + process.arrival
 
 
-def pp(processes: list[Process], processes_for_time: list[Process], works=None) -> None:
+def pp(processes: list[Process], processes_for_time: list[Process] = None, works=None) -> None:
+    if not processes_for_time:
+        processes_for_time = processes
     p = [str(x.id).rjust(2) for x in processes]
     if works:
         et = [str(time).rjust(2) for time in works]
@@ -328,29 +347,41 @@ def pp(processes: list[Process], processes_for_time: list[Process], works=None) 
     # x.turnaround_time for x in processes)/len(processes))
 
 
-if __name__ == "__main__":
-    execution_list = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
-        6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
-    # execution_list = [Process(0,10,1, 3), Process(0,1,2, 1), Process(0,2,3, 3), Process(0,1,4, 4), Process(0,5,5, 2)]
+def main():
+    string_input = input(
+        "Enter processes.\nFormat: arrival burst priority,...,arrival burst priority\n: ")
+    process_strings = string_input.split(",")
+    processes: list[Process] = []
+    id = 1
+    for process_string in process_strings:
+        print(process_string)
+        print(process_string.split(" "))
+        arrival, burst, priority = process_string.split(" ")
+        processes.append(Process(int(arrival), int(burst), id, int(priority)))
+        id += 1
 
     print("FCFS:")
-    list = FCFS([copy.copy(x) for x in execution_list])
-    pp(list, list)
-    print("\nSJF/SPN:")
-    list1, list2 = SJF([copy.copy(x) for x in execution_list])
-    pp(list1, list2)
+    result = FCFS([copy.copy(x) for x in processes])
+    pp(result)
+    print("\nSJF:")
+    result = SJF([copy.copy(x) for x in processes])
+    pp(result)
     print("\nRR:")
-    list, list2, works = RR([copy.copy(x) for x in execution_list], 6)
-    pp(list, list2, works)
+    result, result2, works = RR([copy.copy(x) for x in processes], 6)
+    pp(result, result2, works)
     print("\nSRTF:")
-    list, list2, works = SRTF([copy.copy(x) for x in execution_list])
-    pp(list, list2, works)
+    result, result2, works = SRTF([copy.copy(x) for x in processes])
+    pp(result, result2, works)
     print("\nHRRN:")
-    list, list2, works = HRRN([copy.copy(x) for x in execution_list])
+    list, list2, works = HRRN([copy.copy(x) for x in processes])
     pp(list, list2, works)
     print("\nNPP:")
-    list, list2, works = NPP([copy.copy(x) for x in execution_list])
+    list, list2, works = NPP([copy.copy(x) for x in processes])
     pp(list, list2, works)
-    print("\nMLM:")
-    list, list2, works = MLM([copy.copy(x) for x in execution_list])
+    print("\nMLFB:")
+    list, list2, works = MLFB([copy.copy(x) for x in processes])
     pp(list, list2, works)
+
+
+if __name__ == "__main__":
+    main()
