@@ -197,36 +197,42 @@ def HRRN(processes: list[Process]):
     Calculates the response time for a process, given as (w+b)/b where w is how long the process has waited, and b is the burst time for the process.
     The algorithm then chooses the process with the highest response time, and runs it.
     """
-
-    processes.sort(key=lambda x: (x.burst + x.waiting_time) / x.burst)
+    processes.sort(key=lambda x: x.arrival)
     works = []
     result_list = []
     arrived = []
     done_list = []
-    temp_queue = []
     arrival_time = 0
-    c = 1
+    prev_current = None
     current = None
+    c = 1
     while True:
         arrived.extend([x for x in processes if x.arrival <=
                        arrival_time and x not in done_list and x not in arrived])
         old = current
-        current = min(arrived, key=lambda x: (x.burst + x.waiting_time) / x.burst)
+        current = min(arrived, key=lambda x: (x.burst+x.waiting_time)/x.burst)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
         current.burst -= 1
-        arrival_time += 1
+        for p in arrived:
+            p.waiting_time += 1
         if old == current:
             works[-1] += 1
         else:
             works.append(c)
         if current.burst == 0:
-            done_list.append(current)
-            result_list.append(current)
             arrived.remove(current)
-            current.end_time = arrival_time
-        for p in arrived:
-            p.waiting_time += 1
+            done_list.append(current)
+
+        arrival_time += 1
         if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
             return result_list, processes, works
+        c += 1
+    
 
 
 def optimal_end_time(processes: list[Process]):
