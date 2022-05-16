@@ -1,4 +1,4 @@
-### What are the building blocks of a computer system?
+## What are the building blocks of a computer system?
 - Hardware
 	- Central Processing Unit
 		- Alu
@@ -24,10 +24,10 @@
 - Software
 
 
-### Which resources are represented by these buildingblocks?
+## Which resources are represented by these buildingblocks?
 idk
 
-### How does code (in the OS) interact with hardware resources?
+## How does code (in the OS) interact with hardware resources?
 
 
-### What are the most relevant developments in computer architecture of the last decades and which problems/benefits are related to these developments?
+## What are the most relevant developments in computer architecture of the last decades and which problems/benefits are related to these developments?
