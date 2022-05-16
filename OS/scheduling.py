@@ -1,6 +1,8 @@
 
 
+from concurrent.futures import process
 import copy
+from typing import List
 
 
 class Process:
@@ -190,6 +192,42 @@ def SRTF(processes: list[Process]):
             return result_list, processes, works
         c += 1
 
+def HRRN(processes: list[Process]):
+    """
+    Calculates the response time for a process, given as (w+b)/b where w is how long the process has waited, and b is the burst time for the process.
+    The algorithm then chooses the process with the highest response time, and runs it.
+    """
+
+    processes.sort(key=lambda x: (x.burst + x.waiting_time) / x.burst)
+    works = []
+    result_list = []
+    arrived = []
+    done_list = []
+    temp_queue = []
+    arrival_time = 0
+    c = 1
+    current = None
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        old = current
+        current = min(arrived, key=lambda x: (x.burst + x.waiting_time) / x.burst)
+        current.burst -= 1
+        arrival_time += 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
+        if current.burst == 0:
+            done_list.append(current)
+            result_list.append(current)
+            arrived.remove(current)
+            current.end_time = arrival_time
+        for p in arrived:
+            p.waiting_time += 1
+        if not arrived:
+            return result_list, processes, works
+
 
 def optimal_end_time(processes: list[Process]):
     for process in processes:
@@ -228,4 +266,7 @@ if __name__ == "__main__":
     pp(list, list2, works)
     print("\nSRTF:")
     list, list2, works = SRTF([copy.copy(x) for x in execution_list])
+    pp(list, list2, works)
+    print("\nHRRN:")
+    list, list2, works = HRRN([copy.copy(x) for x in execution_list])
     pp(list, list2, works)
