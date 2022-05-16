@@ -233,6 +233,39 @@ def HRRN(processes: list[Process]):
             return result_list, processes, works
         c += 1
     
+def NPP(processes: list[Process]):
+    arrival_time = 0
+    arrived = []
+    done_list = []
+    works = []
+    result_list = []
+    current = None
+    prev_current = None
+    c = 1
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        old = current
+        current = min(arrived, key=lambda x: x.priority)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
+        current.burst -= 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
+        if current.burst == 0:
+            arrived.remove(current)
+            done_list.append(current)
+        arrival_time += 1
+        if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
+            return result_list, processes, works
+        c += 1
+
 
 
 def optimal_end_time(processes: list[Process]):
@@ -259,7 +292,7 @@ def pp(processes: list[Process], processes_for_time: list[Process], works=None) 
 if __name__ == "__main__":
     execution_list = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
         6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
-    # execution_list = [Process(0,10,1), Process(0,1,2), Process(0,2,3), Process(0,1,4), Process(0,5,5)]
+    # execution_list = [Process(0,10,1, 3), Process(0,1,2, 1), Process(0,2,3, 3), Process(0,1,4, 4), Process(0,5,5, 2)]
 
     print("FCFS:")
     list = FCFS([copy.copy(x) for x in execution_list])
@@ -275,4 +308,7 @@ if __name__ == "__main__":
     pp(list, list2, works)
     print("\nHRRN:")
     list, list2, works = HRRN([copy.copy(x) for x in execution_list])
+    pp(list, list2, works)
+    print("\nNPP:")
+    list, list2, works = NPP([copy.copy(x) for x in execution_list])
     pp(list, list2, works)
