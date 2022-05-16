@@ -19,3 +19,7 @@
 ### Problems
 - Minimize fragmentation
 - Swap out memory segments
+
+
+TODO
+User/kernel mode?
