@@ -68,4 +68,4 @@ Code can run in user-mode or kernel-mode, they often change back and forth
 Change to kernel mode is usually done via a sys-call
 
 TODO
-give examples, fork, exec etc.
+give examples, [[Fork]], [[Exec]] etc.

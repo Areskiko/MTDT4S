@@ -1,4 +1,4 @@
-# fork()
+# Fork
 
 From the point of view of the application, calling fork looks like a regular function call
 
