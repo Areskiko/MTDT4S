@@ -345,7 +345,7 @@ def main():
     quantum = int(input("Enter quantum: "))
     print()
     process_strings = string_input.split(",")
-    for i,p in enumerate(process_strings):
+    for i, p in enumerate(process_strings):
         process_strings[i] = p.strip()
     processes: list[Process] = []
     id = 1
