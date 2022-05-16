@@ -268,7 +268,45 @@ def NPP(processes: list[Process]):
             return result_list, processes, works
         c += 1
 
-
+def MLM(processes: list[Process]):
+    for p in processes:
+        p.priority = 1
+    arrival_time = 0
+    arrived = []
+    done_list = []
+    works = []
+    result_list = []
+    current = None
+    prev_current = None
+    c = 1
+    while True:
+        arrived.extend([x for x in processes if x.arrival <=
+                       arrival_time and x not in done_list and x not in arrived])
+        old = current
+        current = min(arrived, key=lambda x: x.priority)
+        if current != prev_current and prev_current != None:
+            prev_current.end_time = arrival_time
+            result_list.append(prev_current)
+        prev_current = current
+        q = min(2 ** (current.priority - 1), current.burst)
+        current.burst -= q
+        current.priority += 1
+        if old == current:
+            works[-1] += 1
+        else:
+            works.append(c)
+        if current.burst == 0:
+            arrived.remove(current)
+            done_list.append(current)
+        else:
+            arrived.remove(current)
+            arrived.append(current)
+        arrival_time += q
+        if not arrived:
+            current.end_time = arrival_time
+            result_list.append(current)
+            return result_list, processes, works
+        c += q
 
 def optimal_end_time(processes: list[Process]):
     for process in processes:
@@ -313,4 +351,7 @@ if __name__ == "__main__":
     pp(list, list2, works)
     print("\nNPP:")
     list, list2, works = NPP([copy.copy(x) for x in execution_list])
+    pp(list, list2, works)
+    print("\nMLM:")
+    list, list2, works = MLM([copy.copy(x) for x in execution_list])
     pp(list, list2, works)
