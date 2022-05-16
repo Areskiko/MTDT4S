@@ -343,12 +343,11 @@ def main():
     string_input = input(
         "Enter processes.\nFormat: arrival burst priority,...,arrival burst priority\n: ")
     quantum = int(input("Enter quantum: "))
+    print()
     process_strings = string_input.split(",")
     processes: list[Process] = []
     id = 1
     for process_string in process_strings:
-        print(process_string)
-        print(process_string.split(" "))
         arrival, burst, priority = process_string.split(" ")
         processes.append(Process(int(arrival), int(burst), id, int(priority)))
         id += 1
@@ -374,7 +373,7 @@ def main():
     print("\nMLM:")
     list, list2, works = MLM([copy.copy(x) for x in processes])
     pp(list, list2, works)
-    input("Enter to exit.")
+    input("Enter to exit")
 
 
 if __name__ == "__main__":
