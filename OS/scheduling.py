@@ -297,7 +297,7 @@ if __name__ == "__main__":
     print("FCFS:")
     list = FCFS([copy.copy(x) for x in execution_list])
     pp(list, list)
-    print("\nSJF:")
+    print("\nSJF/SPN:")
     list2 = SJF([copy.copy(x) for x in execution_list])
     pp(list2, list2)
     print("\nRR:")
