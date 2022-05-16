@@ -381,6 +381,7 @@ def main():
     print("\nMLFB:")
     list, list2, works = MLFB([copy.copy(x) for x in processes])
     pp(list, list2, works)
+    input("Press enter to exit")
 
 
 if __name__ == "__main__":
