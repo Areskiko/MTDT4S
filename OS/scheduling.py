@@ -196,7 +196,9 @@ def optimal_end_time(processes: list[Process]):
         process.optimal_end_time = process.burst + process.arrival
 
 
-def pp(processes: list[Process], processes_for_time: list[Process], works=None) -> None:
+def pp(processes: list[Process], processes_for_time: list[Process] = None, works=None) -> None:
+    if not processes_for_time:
+        processes_for_time = processes
     p = [str(x.id).rjust(2) for x in processes]
     if works:
         et = [str(time).rjust(2) for time in works]
@@ -212,20 +214,51 @@ def pp(processes: list[Process], processes_for_time: list[Process], works=None) 
     # x.turnaround_time for x in processes)/len(processes))
 
 
-if __name__ == "__main__":
-    execution_list = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
-        6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
-    # execution_list = [Process(0,10,1), Process(0,1,2), Process(0,2,3), Process(0,1,4), Process(0,5,5)]
+# if __name__ == "__main__":
+#     processes = [Process(0, 4, 1), Process(2, 12, 2), Process(5, 2, 3), Process(
+#         6, 6, 4), Process(8, 10, 5), Process(12, 3, 6), Process(15, 8, 7), Process(22, 5, 8)]
+#     # execution_list = [Process(0,10,1), Process(0,1,2), Process(0,2,3), Process(0,1,4), Process(0,5,5)]
+
+#     print("FCFS:")
+#     list = FCFS([copy.copy(x) for x in processes])
+#     pp(list, list)
+#     print("\nSJF:")
+#     list2 = SJF([copy.copy(x) for x in processes])
+#     pp(list2, list2)
+#     print("\nRR:")
+#     list, list2, works = RR([copy.copy(x) for x in processes], 6)
+#     pp(list, list2, works)
+#     print("\nSRTF:")
+#     list, list2, works = SRTF([copy.copy(x) for x in processes])
+#     pp(list, list2, works)
+
+
+def main():
+    string_input = input(
+        "Enter processes, format = arrival burst priority, ... ,arrival burst priority: ")
+    process_strings = string_input.split(",")
+    processes: list[Process] = []
+    id = 1
+    for process_string in process_strings:
+        print(process_string)
+        print(process_string.split(" "))
+        arrival, burst, priority = process_string.split(" ")
+        processes.append(Process(int(arrival), int(burst), id, int(priority)))
+        id += 1
 
     print("FCFS:")
-    list = FCFS([copy.copy(x) for x in execution_list])
-    pp(list, list)
+    result = FCFS([copy.copy(x) for x in processes])
+    pp(result)
     print("\nSJF:")
-    list2 = SJF([copy.copy(x) for x in execution_list])
-    pp(list2, list2)
+    result = SJF([copy.copy(x) for x in processes])
+    pp(result)
     print("\nRR:")
-    list, list2, works = RR([copy.copy(x) for x in execution_list], 6)
-    pp(list, list2, works)
+    result, result, works = RR([copy.copy(x) for x in processes], 6)
+    pp(result, works=works)
     print("\nSRTF:")
-    list, list2, works = SRTF([copy.copy(x) for x in execution_list])
-    pp(list, list2, works)
+    result, result, works = SRTF([copy.copy(x) for x in processes])
+    pp(result, works=works)
+
+
+if __name__ == "__main__":
+    main()
