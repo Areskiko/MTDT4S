@@ -73,7 +73,7 @@ class Clock:
 def main():
   # get accessSequence from user
   userInput = input("Enter the page requests (comma or space separated): ")
-  userInput.replace(",", " ")
+  userInput = userInput.replace(",", " ")
   accessSequence = [int(x) for x in userInput.split()]
   
   # get clockSize from user

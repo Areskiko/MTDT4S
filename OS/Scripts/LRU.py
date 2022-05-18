@@ -43,7 +43,8 @@ def from_rlu(rlu):
     return [[rlu[j][i] for j in range(len(rlu))] for i in range(len(rlu[0]))]
 
 if __name__ == "__main__":
-    f = [int(x) for x in input("Enter the page requests (space separated): ").split()]
+    i = input("Enter the page requests (space or/and comma separated): ").replace(",", " ")
+    f = [int(x) for x in i.split()]
     c = int(input("Enter the page capacity: "))
     frames, ages = lru(f, c)
     print("Frames:")
